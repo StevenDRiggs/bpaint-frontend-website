@@ -2,7 +2,6 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import sass from 'sass'
 
 import styles from '../styles/Home.module.scss'
 
@@ -16,7 +15,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
         <h1>
           Welcome to<br />ButterflyPaint!
         </h1>
@@ -39,16 +38,6 @@ const Home: NextPage = () => {
           </Link>
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://stevendriggs.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          &copy; Steven Riggs 2022
-        </a>
-      </footer>
     </div>
   )
 }

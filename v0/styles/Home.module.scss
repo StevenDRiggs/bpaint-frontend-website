@@ -1,21 +1,6 @@
 @use 'mixins' as *;
 
 
-.main {
-  @include default-flex;
-  flex-direction: column;
-  height: 95vh;
-
-  h1 {
-    font-size: 3rem;
-  }
-}
-
-.footer {
-  @include default-flex;
-  height: 5vh;
-}
-
 .buttonsGroup {
   @include default-flex;
   justify-content: space-between;

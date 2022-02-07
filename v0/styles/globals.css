@@ -11,3 +11,22 @@ body {
   font-size: 1rem;
   text-align: center;
 }
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 95vh;
+}
+
+main h1 {
+  font-size: 3rem;
+}
+
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5vh;
+}

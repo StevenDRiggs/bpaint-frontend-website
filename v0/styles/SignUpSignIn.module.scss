@@ -1,0 +1,22 @@
+@use 'mixins' as *;
+
+
+.formField {
+  @include default-flex;
+
+  width: 35vw;
+  margin: 1.5rem 0;
+
+  input {
+    width: 100%;
+  }
+}
+
+.submitButton {
+  @include default-flex;
+
+  width: 35vw;
+  margin: 1.5rem 0;
+  padding: 0.5rem 0;
+  box-shadow: 6px 6px 6px grey;
+}
