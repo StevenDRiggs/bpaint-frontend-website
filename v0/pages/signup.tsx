@@ -12,7 +12,7 @@ const SignUp: NextPage = () => {
 
   const handleChange = event => {
     const target = event.target as HtmlElement
-    eval(`set${target.name}(target.value)`)
+    eval(`set${target.name}(target.value.trim())`)
   }
 
   const handleSubmit = event => {
@@ -36,13 +36,13 @@ const SignUp: NextPage = () => {
       .then(json => alert(JSON.stringify(json)))
       .catch(err => alert(`ERROR: ${JSON.stringify(err)}`))
     } else {
-      alert('password and password confirmation must match')
+      alert('Password and Password Confirmation must match')
     }
   }
 
 
   return (
-    <main className='main'>
+    <main>
       <form onSubmit={handleSubmit}>
         <fieldset className={styles.formField}>
           <legend>
