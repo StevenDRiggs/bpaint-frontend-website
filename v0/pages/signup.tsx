@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import Link from 'next/link'
 import {useState} from 'react'
 
 import styles from '../styles/SignUpSignIn.module.scss'
@@ -110,6 +111,14 @@ const SignUp: NextPage = () => {
           value='Sign Up'
         />
       </form>
+      <p>
+        Already have an account?
+      </p>
+      <Link href='/signin'>
+        <a>
+          Sign in here
+        </a>
+      </Link>
     </main>
   )
 }

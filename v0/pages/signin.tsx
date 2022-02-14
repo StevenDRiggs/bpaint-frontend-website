@@ -1,5 +1,9 @@
 import type { NextPage } from 'next'
-import {useState} from 'react'
+import Link from 'next/link'
+import { useState } from 'react'
+
+import { login } from '../redux/features/user/userSlice'
+import { useAppDispatch } from '../redux/hooks'
 
 import styles from '../styles/SignUpSignIn.module.scss'
 
@@ -8,6 +12,8 @@ const SignIn: NextPage = () => {
   const [usernameOrEmail, setUsernameOrEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const dispatch = useAppDispatch()
+
   const handleChange = event => {
     const target = event.target as HtmlElement
     eval(`set${target.name}(target.value.trim())`)
@@ -15,22 +21,10 @@ const SignIn: NextPage = () => {
 
   const handleSubmit = event => {
     event.preventDefault()
-      fetch('http://localhost:5000/login', {
-        mode: 'cors',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user: {
-            username_or_email: usernameOrEmail,
-            password,
-          },
-        }),
-      })
-      .then(resp => resp.json())
-      .then(json => alert(JSON.stringify(json)))
-      .catch(err => alert(`ERROR: ${JSON.stringify(err)}`))
+    dispatch(login({
+      usernameOrEmail,
+      password,
+    }))
   }
 
 
@@ -71,6 +65,14 @@ const SignIn: NextPage = () => {
           value='Sign In'
         />
       </form>
+      <p>
+        Don't have an account yet?
+      </p>
+      <Link href='/signup'>
+        <a>
+          Sign up here
+        </a>
+      </Link>
     </main>
   )
 }
