@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { login } from '../user/userSlice'
+import { login, signup } from '../user/userSlice'
 
 
 const initialState = null
@@ -18,7 +18,14 @@ export const tokenSlice = createSlice({
     .addCase(
       login.fulfilled,
       (state, action) => {
-        console.log('token:', action.payload.token)
+        return {
+          value: action.payload.token,
+        }
+      }
+    )
+    .addCase(
+      signup.fulfilled,
+      (state, action) => {
         return {
           value: action.payload.token,
         }

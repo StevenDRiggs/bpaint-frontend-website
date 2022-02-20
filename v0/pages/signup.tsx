@@ -3,12 +3,16 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 import { useTokenForLogin } from '../react/hooks'
+import { signup } from '../redux/features/user/userSlice'
+import { useAppDispatch } from '../redux/hooks'
 
 import styles from '../styles/SignUpSignIn.module.scss'
 
 
 const SignUp: NextPage = () => {
   useTokenForLogin()
+
+  const dispatch = useAppDispatch()
 
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
@@ -23,23 +27,11 @@ const SignUp: NextPage = () => {
   const handleSubmit = event => {
     event.preventDefault()
     if (password === passwordConf) {
-      fetch('http://localhost:5000/users', {
-        mode: 'cors',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          user: {
-            username,
-            email,
-            password,
-          },
-        }),
-      })
-      .then(resp => resp.json())
-      .then(json => alert(JSON.stringify(json)))
-      .catch(err => alert(`ERROR: ${JSON.stringify(err)}`))
+      dispatch(signup({
+        username,
+        email,
+        password,
+      }))
     } else {
       alert('Password and Password Confirmation must match')
     }

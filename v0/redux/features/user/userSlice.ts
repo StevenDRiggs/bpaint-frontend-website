@@ -54,6 +54,30 @@ export const login = createAsyncThunk(
   }
 )
 
+export const signup = createAsyncThunk(
+  'user/signup',
+  async ({ username, email, password }) => {
+    return fetch(`${BACKEND_URL}/users`, {
+      mode: 'cors',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user: {
+          username,
+          email,
+          password,
+        },
+      }),
+    })
+    .then(resp => resp.json())
+    .catch(err => {
+      console.log('ERROR:', JSON.stringify(err))
+    })
+  }
+)
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -65,6 +89,10 @@ export const userSlice = createSlice({
     builder
     .addCase(
       login.fulfilled,
+      (state, action) => action.payload.user
+    )
+    .addCase(
+      signup.fulfilled,
       (state, action) => action.payload.user
     )
   },
