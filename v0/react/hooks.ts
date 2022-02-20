@@ -7,6 +7,8 @@ import { clearUser, setUser } from '../redux/features/user/userSlice'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 import { persistor } from '../redux/store'
 
+import { UserState } from '../redux/features/user/userSlice'
+
 
 export const useTokenForLogin = () => {
   const dispatch = useAppDispatch()
@@ -15,8 +17,8 @@ export const useTokenForLogin = () => {
 
   useEffect(() => {
     if (token) {
-      let user
-      const errors = []
+      let user: UserState
+      const errors: string[] = []
 
       fetch(`${BACKEND_URL}/validate`, {
         mode: 'cors',

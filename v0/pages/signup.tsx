@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 
 import { useTokenForLogin } from '../react/hooks'
 import { signup } from '../redux/features/user/userSlice'
@@ -19,12 +19,12 @@ const SignUp: NextPage = () => {
   const [password, setPassword] = useState('')
   const [passwordConf, setPasswordConf] = useState('')
 
-  const handleChange = event => {
-    const target = event.target as HtmlElement
+  const handleChange = (event: SyntheticEvent) => {
+    const target = event.target as HTMLFormElement
     eval(`set${target.name}(target.value.trim())`)
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault()
     if (password === passwordConf) {
       dispatch(signup({
@@ -52,8 +52,8 @@ const SignUp: NextPage = () => {
             value={username}
             placeholder='Awesome Username'
             onChange={handleChange}
-            minLength='5'
-            maxLength='50'
+            minLength={5}
+            maxLength={50}
             required
           />
         </fieldset>
@@ -82,7 +82,7 @@ const SignUp: NextPage = () => {
             value={password}
             placeholder='sup3r s3cur3 p@$$w0rd'
             onChange={handleChange}
-            minLength='5'
+            minLength={5}
             required
           />
         </fieldset>
@@ -97,7 +97,7 @@ const SignUp: NextPage = () => {
             value={passwordConf}
             placeholder='sup3r s3cur3 p@$$w0rd'
             onChange={handleChange}
-            minLength='5'
+            minLength={5}
             required
           />
         </fieldset>

@@ -3,15 +3,22 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { login, signup } from '../user/userSlice'
 
 
-const initialState = null
+interface TokenState {
+  value: string|null;
+}
+
+
+const initialState: TokenState = {
+  value: null,
+}
 
 
 export const tokenSlice = createSlice({
   name: 'token',
   initialState,
   reducers: {
-    setToken: (state, action: PayloadAction<string|null>) => action.payload,
-    clearToken: (state) => null,
+    clearToken: () => initialState,
+    setToken: (state, action) => action.payload,
   },
   extraReducers: (builder) => {
     builder

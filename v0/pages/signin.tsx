@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import { useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 
 import { useTokenForLogin } from '../react/hooks'
 import { login } from '../redux/features/user/userSlice'
@@ -18,12 +18,12 @@ const SignIn: NextPage = () => {
   const dispatch = useAppDispatch()
   const { token, user } = useAppSelector(state => state)
 
-  const handleChange = event => {
-    const target = event.target as HtmlElement
+  const handleChange = (event: SyntheticEvent) => {
+    const target = event.target as HTMLFormElement
     eval(`set${target.name}(target.value.trim())`)
   }
 
-  const handleSubmit = event => {
+  const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault()
     dispatch(login({
       usernameOrEmail,

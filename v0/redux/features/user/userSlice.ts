@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { BACKEND_URL } from '../../../.env'
 
 
-interface UserState {
+export interface UserState {
   id: number|null;
   username: string|null;
   email: string|null;
@@ -16,6 +16,17 @@ interface UserState {
   createdAt: Date|null;
   updatedAt: Date|null;
   isAdmin: boolean;
+}
+
+interface LoginParams {
+  usernameOrEmail: string;
+  password: string;
+}
+
+interface SignupParams {
+  username: string;
+  email: string;
+  password: string;
 }
 
 
@@ -33,7 +44,7 @@ const initialState: UserState = {
 
 export const login = createAsyncThunk(
   'user/login',
-  async ({ usernameOrEmail, password }) => {
+  async ({ usernameOrEmail, password }: LoginParams) => {
     return fetch(`${BACKEND_URL}/login`, {
       mode: 'cors',
       method: 'POST',
@@ -56,7 +67,7 @@ export const login = createAsyncThunk(
 
 export const signup = createAsyncThunk(
   'user/signup',
-  async ({ username, email, password }) => {
+  async ({ username, email, password }: SignupParams) => {
     return fetch(`${BACKEND_URL}/users`, {
       mode: 'cors',
       method: 'POST',
