@@ -1,11 +1,15 @@
 import type { NextPage } from 'next'
 import Link from 'next/link'
-import {useState} from 'react'
+import { useState } from 'react'
+
+import { useTokenForLogin } from '../react/hooks'
 
 import styles from '../styles/SignUpSignIn.module.scss'
 
 
 const SignUp: NextPage = () => {
+  useTokenForLogin()
+
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')

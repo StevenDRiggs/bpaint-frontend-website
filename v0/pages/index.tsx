@@ -2,11 +2,15 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect } from 'react'
 
+import { useTokenForLogin } from '../react/hooks'
 import styles from '../styles/Home.module.scss'
 
 
 const Home: NextPage = () => {
+  useTokenForLogin()
+
   return (
     <div>
       <Head>

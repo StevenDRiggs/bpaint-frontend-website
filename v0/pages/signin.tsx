@@ -2,17 +2,21 @@ import type { NextPage } from 'next'
 import Link from 'next/link'
 import { useState } from 'react'
 
+import { useTokenForLogin } from '../react/hooks'
 import { login } from '../redux/features/user/userSlice'
-import { useAppDispatch } from '../redux/hooks'
+import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
 import styles from '../styles/SignUpSignIn.module.scss'
 
 
 const SignIn: NextPage = () => {
+  useTokenForLogin()
+
   const [usernameOrEmail, setUsernameOrEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const dispatch = useAppDispatch()
+  const { token, user } = useAppSelector(state => state)
 
   const handleChange = event => {
     const target = event.target as HtmlElement
