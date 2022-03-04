@@ -10,6 +10,39 @@ import { persistor } from '../redux/store'
 import { UserState } from '../redux/features/user/userSlice'
 
 
+export const reloadUser = (token, dispatch, router) => {
+  let user: UserState
+  const errors: string[] = []
+
+  fetch(`${BACKEND_URL}/validate`, {
+    mode: 'cors',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      token,
+    }),
+  })
+  .then(async resp => {
+    const json = await resp.json()
+    user = json.user
+    errors.push(json.errors)
+  })
+  .catch(err => errors.push(err))
+  .then(() => {
+    if (user) {
+      dispatch(setUser(user))
+      router.push('/dashboard')
+    }
+    if (errors.some(err => !(err === undefined))) {
+      console.log('errors:', errors)
+      dispatch(clearToken())
+    }
+  })
+}
+
+
 export const useTokenForLogin = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
@@ -17,35 +50,7 @@ export const useTokenForLogin = () => {
 
   useEffect(() => {
     if (token) {
-      let user: UserState
-      const errors: string[] = []
-
-      fetch(`${BACKEND_URL}/validate`, {
-        mode: 'cors',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          token,
-        }),
-      })
-      .then(async resp => {
-        const json = await resp.json()
-        user = json.user
-        errors.push(json.errors)
-      })
-      .catch(err => errors.push(err))
-      .then(() => {
-        if (user) {
-          dispatch(setUser(user))
-          router.push('/dashboard')
-        }
-        if (errors.some(err => !(err === undefined))) {
-          console.log('errors:', errors)
-          dispatch(clearToken())
-        }
-      })
+      reloadUser(token, dispatch, router)
     } else {
       console.log('token does not exist')
     }
