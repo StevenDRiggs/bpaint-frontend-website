@@ -21,6 +21,12 @@ const Dashboard: NextPage = () => {
   const token = useAppSelector(state => state.token.value)
   const user = useAppSelector(state => state.user)
   const { creations, favorites, username } = user
+  const created_analog_colors = creations ? creations['analog_colors'] : []
+  const created_packages = creations ? creations['packages'] : []
+  const created_recipes = creations ? creations['recipes'] : []
+  const favorite_analog_colors = favorites ? favorites['analog_colors'] : null
+  const favorite_packages = favorites ? favorites['packages'] : null
+  const favorite_recipes = favorites ? favorites['recipes'] : null
 
   const signOut = () => {
     dispatch(clearUser())
@@ -40,67 +46,133 @@ const Dashboard: NextPage = () => {
         Sign Out
       </button>
       <div className={styles.profile}>
-        <div className={styles.avatar}>
+        <div>
           <Image src={user.image_url || 'https://picsum.photos/50'} width={200} height={300} />
+          <p className={styles.username}>
+            {username}
+          </p>
         </div>
-        <p className={styles.username}>
-          {username}
+        <p>
         </p>
-        <ul className={styles.favorites}>
-          <header>
-            <p>
-              Favorites:
-            </p>
-          </header>
-          {favorites?.length > 0
-            ? favorites.map(fav => (
-              <Link href={`/colors/${fav.slug}`}>
-                <a>
-                  <li>
-                    <Image src={fav.image_url} width={20} height={20} />
-                    <span>
-                      {fav.name}
-                    </span>
-                  </li>
-                </a>
-              </Link>
-            ))
-            : <p>
-              <em>
-                No favorites chosen
-              </em>
-            </p>
-          }
-        </ul>
-        <ul className={styles.creations}>
+        {favorite_analog_colors?.length > 0 || favorite_packages?.length > 0 || favorite_recipes?.length > 0
+          ? <div className={styles.profileLists}>
+            <header>
+              <p>
+                My Favorites:
+              </p>
+            </header>
+            {favorite_packages?.length > 0
+              ? <p>
+                Packages:
+              </p>
+              : null
+            }
+            {favorite_packages?.length > 0
+              ? favorite_packages.map(package => (
+                <Link href={`/package/${package.slug}`}>
+                  <a>
+                    {package.name}
+                  </a>
+                </Link>
+              ))
+              : null
+            }
+            {favorite_recipes?.length > 0
+              ? <p>
+                Recipes:
+              </p>
+              : null
+            }
+            {favorite_recipes?.length > 0
+              ? favorite_recipes.map(recipe => (
+                <Link href={`/recipe/${recipe.id}`}>
+                  <a>
+                    [{recipe.display}]
+                  </a>
+                </Link>
+              ))
+              : null
+            }
+            {favorite_analog_colors?.length > 0
+              ? <p>
+                Analog Colors:
+              </p>
+              : null
+            }
+            {favorite_analog_colors?.length > 0
+              ? favorite_analog_colors.map(color => (
+                <Link href={`/color/${color.id}`}>
+                  <a>
+                    {color.name}
+                  </a>
+                </Link>
+              ))
+              : null
+            }
+          </div>
+          : null
+        }
+        <div className={styles.profileLists}>
           <header>
             <p>
               My Creations:
             </p>
           </header>
-          {creations?.length > 0
-            ? creations.map(color => (
-              <Link href={`/colors/${color.slug}`}>
-                <a>
-                  <li>
-                    <Image src={color.image_url} width={20} height={20} />
-                    <span>
-                      {color.name}
-                    </span>
-                  </li>
-                </a>
-              </Link>
-            ))
+          {created_analog_colors?.length > 0 || created_packages?.length > 0 || created_recipes?.length > 0
+            ? <>
+              {created_packages?.length > 0
+                ? <>
+                  <p>
+                    Packages:
+                  </p>
+                  {created_packages.map(package => (
+                    <Link href={`/package/${package.slug}`}>
+                      <a>
+                        {package.name}
+                      </a>
+                    </Link>
+                  ))}
+                </>
+                : null
+              }
+              {created_recipes?.length > 0
+                ? <>
+                  <p>
+                    Recipes:
+                  </p>
+                  {created_recipes.map(recipe => (
+                    <Link href={`/recipe/${recipe.id}`}>
+                      <a>
+                        [{recipe.display}]
+                      </a>
+                    </Link>
+                  ))}
+                </>
+                : null
+              }
+              {created_analog_colors?.length > 0
+                ? <>
+                  <p>
+                    Analog Colors:
+                  </p>
+                  {created_analog_colors.map(color => (
+                    <Link href={`/color/${color.id}`}>
+                      <a>
+                        {color.name}
+                      </a>
+                    </Link>
+                  ))}
+                </>
+                : null
+              }
+            </>
             : <p>
-              <em>
-                Nothing created yet
-              </em>
+              You haven&apos;t created anything yet
             </p>
           }
-        </ul>
+        </div>
       </div>
       <p>
-        {JSON.stringify(user)}
       </p>
     </main>
   )

@@ -1,40 +1,23 @@
 .profile {
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-areas:
-    "avatar favorites creations"
-    "avatar favorites creations"
-    "username favorites creations";
+  display: flex;
+  gap: 5%;
   align-items: center;
   justify-items: center;
 }
 
-.avatar {
-  grid-area: avatar;
-}
-
 .username {
-  grid-area: username;
   font-weight: bold;
-  align-self: start;
 }
 
-@mixin gridLists {
-  margin: 0;
-  padding: 0;
+.profileLists {
+  display: flex;
+  flex-direction: column;
 
   header {
     font-weight: bolder;
   }
-}
 
-.favorites {
-  @include gridLists;
-  grid-area: favorites;
-}
-
-.creations {
-  @include gridLists;
-  grid-area: creations;
+  a {
+    font-style: italic;
+  }
 }
