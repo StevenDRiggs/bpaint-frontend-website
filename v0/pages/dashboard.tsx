@@ -5,8 +5,6 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 import { reloadUser, useNoTokenSignOut } from '../react/hooks'
-import { clearUser } from '../redux/features/user/userSlice'
-import { clearToken } from '../redux/features/token/tokenSlice'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
 import styles from '../styles/Dashboard.module.scss'
@@ -28,11 +26,6 @@ const Dashboard: NextPage = () => {
   const favorite_packages = favorites ? favorites['packages'] : null
   const favorite_recipes = favorites ? favorites['recipes'] : null
 
-  const signOut = () => {
-    dispatch(clearUser())
-    dispatch(clearToken())
-  }
-
 
   useEffect(() => {
     if (token && Object.values(user).some(val => val === null)) {
@@ -42,9 +35,6 @@ const Dashboard: NextPage = () => {
 
   return (
     <main>
-      <button type='button' onClick={signOut}>
-        Sign Out
-      </button>
       <div className={styles.profile}>
         <div>
           <Image src={user.image_url || 'https://picsum.photos/50'} width={200} height={300} />
@@ -54,38 +44,45 @@ const Dashboard: NextPage = () => {
         </div>
         <p>
         </p>
-        {favorite_analog_colors?.length > 0 || favorite_packages?.length > 0 || favorite_recipes?.length > 0
+        {// @ts-ignore
+          favorite_analog_colors?.length > 0 || favorite_packages?.length > 0 || favorite_recipes?.length > 0
           ? <div className={styles.profileLists}>
             <header>
               <p>
                 My Favorites:
               </p>
             </header>
-            {favorite_packages?.length > 0
+            {// @ts-ignore
+              favorite_packages?.length > 0
               ? <p>
                 Packages:
               </p>
               : null
             }
-            {favorite_packages?.length > 0
-              ? favorite_packages.map(package => (
-                <Link href={`/package/${package.slug}`}>
+            {// @ts-ignore
+              favorite_packages?.length > 0
+              // @ts-ignore
+              ? favorite_pkgs.map(pkg => (
+                <Link key={pkg.id} href={`/pkg/${pkg.slug}`}>
                   <a>
-                    {package.name}
+                    {pkg.name}
                   </a>
                 </Link>
               ))
               : null
             }
-            {favorite_recipes?.length > 0
+            {// @ts-ignore
+              favorite_recipes?.length > 0
               ? <p>
                 Recipes:
               </p>
               : null
             }
-            {favorite_recipes?.length > 0
+            {// @ts-ignore
+              favorite_recipes?.length > 0
+              // @ts-ignore
               ? favorite_recipes.map(recipe => (
-                <Link href={`/recipe/${recipe.id}`}>
+                <Link key={recipe.id} href={`/recipe/${recipe.id}`}>
                   <a>
                     [{recipe.display}]
                   </a>
@@ -93,15 +90,18 @@ const Dashboard: NextPage = () => {
               ))
               : null
             }
-            {favorite_analog_colors?.length > 0
+            {// @ts-ignore
+              favorite_analog_colors?.length > 0
               ? <p>
                 Analog Colors:
               </p>
               : null
             }
-            {favorite_analog_colors?.length > 0
+            {// @ts-ignore
+              favorite_analog_colors?.length > 0
+              // @ts-ignore
               ? favorite_analog_colors.map(color => (
-                <Link href={`/color/${color.id}`}>
+                <Link key={color.id} href={`/color/${color.id}`}>
                   <a>
                     {color.name}
                   </a>
@@ -125,10 +125,10 @@ const Dashboard: NextPage = () => {
                   <p>
                     Packages:
                   </p>
-                  {created_packages.map(package => (
-                    <Link href={`/package/${package.slug}`}>
+                  {created_packages.map(pkg => (
+                    <Link key={pkg.id} href={`/pkg/${pkg.slug}`}>
                       <a>
-                        {package.name}
+                        {pkg.name}
                       </a>
                     </Link>
                   ))}
@@ -141,7 +141,7 @@ const Dashboard: NextPage = () => {
                     Recipes:
                   </p>
                   {created_recipes.map(recipe => (
-                    <Link href={`/recipe/${recipe.id}`}>
+                    <Link key={recipe.id} href={`/recipe/${recipe.id}`}>
                       <a>
                         [{recipe.display}]
                       </a>
@@ -156,11 +156,14 @@ const Dashboard: NextPage = () => {
                     Analog Colors:
                   </p>
                   {created_analog_colors.map(color => (
-                    <Link href={`/color/${color.id}`}>
-                      <a>
-                        {color.name}
-                      </a>
-                    </Link>
+                    <div key={color.id}>
+                      <Link href={`/color/${color.id}`}>
+                        <a>
+                          <Image src={color.image_url} width={25} height={25} className={styles.colorBlob} />
+                          {color.name}
+                        </a>
+                      </Link>
+                    </div>
                   ))}
                 </>
                 : null
@@ -172,8 +175,6 @@ const Dashboard: NextPage = () => {
           }
         </div>
       </div>
-      <p>
-      </p>
     </main>
   )
 }

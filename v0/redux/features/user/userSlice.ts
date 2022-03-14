@@ -1,33 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+import { LoginParams, SignupParams, UserState } from '../../../types'
+
 import { BACKEND_URL } from '../../../.env'
-
-
-export interface UserState {
-  id: number|null;
-  username: string|null;
-  email: string|null;
-  preferences: {
-    [index: string]: any;
-  };
-  flags: {
-    [index: string]: any;
-  };
-  createdAt: Date|null;
-  updatedAt: Date|null;
-  isAdmin: boolean;
-}
-
-interface LoginParams {
-  usernameOrEmail: string;
-  password: string;
-}
-
-interface SignupParams {
-  username: string;
-  email: string;
-  password: string;
-}
 
 
 const initialState: UserState = {
@@ -39,6 +14,17 @@ const initialState: UserState = {
   createdAt: null,
   updatedAt: null,
   isAdmin: false,
+  image_url: '',
+  creations: {
+    packages: [],
+    recipes: [],
+    analog_colors: [],
+  },
+  favorites: {
+    packages: [],
+    recipes: [],
+    analog_colors: [],
+  },
 }
 
 

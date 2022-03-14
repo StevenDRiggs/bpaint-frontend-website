@@ -1,16 +1,16 @@
-import { useRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 import { BACKEND_URL } from '../.env'
 import { clearToken } from '../redux/features/token/tokenSlice'
 import { clearUser, setUser } from '../redux/features/user/userSlice'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
-import { persistor } from '../redux/store'
+import { AppDispatch, persistor } from '../redux/store'
 
-import { UserState } from '../redux/features/user/userSlice'
+import { UserState } from '../types'
 
 
-export const reloadUser = (token, dispatch, router) => {
+export const reloadUser = (token: string, dispatch: AppDispatch, router: NextRouter) => {
   let user: UserState
   const errors: string[] = []
 
