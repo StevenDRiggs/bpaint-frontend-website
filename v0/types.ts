@@ -21,13 +21,15 @@ export interface LoginParams {
   password: string;
 }
 
-export interface Package {
-  id: number;
-  creator_id: number;
-  created_at: Date;
-  updated_at: Date;
-  name: string;
-  slug: string;
+export interface PackageInterface {
+  errors?: string[];
+  id?: number;
+  creator_id?: number;
+  created_at?: Date;
+  updated_at?: Date;
+  name?: string;
+  slug?: string;
+  analog_recipes?: Recipe[];
 }
 
 export interface Recipe {
@@ -59,12 +61,12 @@ export interface UserState {
   isAdmin: boolean;
   image_url: string;
   creations: {
-    packages: Package[];
+    packages: PackageInterface[];
     recipes: Recipe[];
     analog_colors: AnalogColor[];
   };
   favorites: {
-    packages: Package[];
+    packages: PackageInterface[];
     recipes: Recipe[];
     analog_colors: AnalogColor[];
   };

@@ -24,13 +24,13 @@ const Navbar = () => {
   return (
     <>
       <nav className={styles.navbar}>
-        <FontAwesomeIcon icon={faCircleXmark} size='2xl' className={`${styles.icon} ${styles.signOutIcon}`} onClick={signOut} data-tip='Sign Out' />
+        <FontAwesomeIcon icon={faCircleXmark} size='2x' className={`${styles.icon} ${styles.signOutIcon}`} onClick={signOut} data-tip='Sign Out' />
         <div />
-        <FontAwesomeIcon icon={faSquarePlus} size='2xl' className={styles.icon} data-tip='Create New Color'/>
-        <FontAwesomeIcon icon={faCalendarPlus} size='2xl' className={styles.icon} data-tip='Create New Recipe' />
-        <FontAwesomeIcon icon={faFolderPlus} size='2xl' className={styles.icon} onClick={() => router.push('/newPackage')} data-tip='Create New Package' />
+        <FontAwesomeIcon icon={faSquarePlus} size='2x' className={styles.icon} data-tip='Create New Color'/>
+        <FontAwesomeIcon icon={faCalendarPlus} size='2x' className={styles.icon} data-tip='Create New Recipe' />
+        <FontAwesomeIcon icon={faFolderPlus} size='2x' className={styles.icon} onClick={() => router.push('/newPackage')} data-tip='Create New Package' />
         <div />
-        <FontAwesomeIcon icon={faHouse} size='2xl' className={styles.icon} onClick={() => router.push('/')} data-tip='Home' />
+        <FontAwesomeIcon icon={faHouse} size='2x' className={styles.icon} onClick={() => router.push('/')} data-tip='Home' />
       </nav>
       <ReactTooltip />
     </>

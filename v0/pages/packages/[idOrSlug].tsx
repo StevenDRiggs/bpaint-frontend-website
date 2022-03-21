@@ -5,6 +5,8 @@ import { BACKEND_URL } from '../../.env'
 import { useNoTokenSignOut } from '../../react/hooks'
 import { useAppSelector } from '../../redux/hooks'
 
+import { PackageInterface } from '../../types'
+
 
 const PackagesShow = () => {
   useNoTokenSignOut()
@@ -12,7 +14,7 @@ const PackagesShow = () => {
   const { user, token: { value: token } } = useAppSelector(state => state)
   const router = useRouter()
   const { idOrSlug } = router.query
-  const [ pkg, setPkg ] = useState({})
+  const [ pkg, setPkg ] = useState<PackageInterface>({})
 
 
   useEffect(() => {
@@ -42,6 +44,7 @@ const PackagesShow = () => {
               </p>
             ))}
           </div>
+          // @ts-ignore
           : pkg.analog_recipes.length == 0
             ? <p>
               No recipes added yet

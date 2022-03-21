@@ -47,6 +47,7 @@ export const useTokenForLogin = () => {
   const router = useRouter()
   const token = useAppSelector(state => state.token.value)
 
+  // @ts-ignore
   useEffect(async () => {
     if (token) {
       await reloadUser(token, dispatch, router)
