@@ -1,12 +1,19 @@
 import React, { SyntheticEvent, useState } from 'react'
+import { useRouter } from 'next/router'
+
+import { BACKEND_URL } from '../.env'
+import { useNoTokenSignOut } from '../react/hooks'
 import { useAppSelector } from '../redux/hooks'
 
 import styles from '../styles/Form.module.scss'
 
 
 const NewPackageForm = () => {
+  useNoTokenSignOut()
+
+  const router = useRouter()
   const [ name, setName ] = useState('')
-  const userId = useAppSelector(state => state.user)
+  const { user: { id: creator_id }, token: { value: token } } = useAppSelector(state => state)
 
 
   const handleChange = (event: SyntheticEvent) => {
@@ -16,12 +23,23 @@ const NewPackageForm = () => {
 
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault()
-    const target = event.target as HTMLElement
 
-    console.log(JSON.stringify({
-      userId,
-      formData: target.value,
-    }))
+    fetch(`${BACKEND_URL}/packages`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        package: {
+          creator_id,
+          name,
+        },
+      }),
+    })
+    .then(resp => resp.json())
+    .then(pkg => router.push(`/packages/${pkg.slug}`))
   }
 
 

@@ -10,7 +10,7 @@ import { AppDispatch, persistor } from '../redux/store'
 import { UserState } from '../types'
 
 
-export const reloadUser = (token: string, dispatch: AppDispatch, router: NextRouter) => {
+export const reloadUser = async (token: string, dispatch: AppDispatch, router: NextRouter) => {
   let user: UserState
   const errors: string[] = []
 
@@ -33,7 +33,6 @@ export const reloadUser = (token: string, dispatch: AppDispatch, router: NextRou
   .then(() => {
     if (user) {
       dispatch(setUser(user))
-      router.push('/dashboard')
     }
     if (errors.some(err => !(err === undefined))) {
       console.log('errors:', errors)
@@ -48,9 +47,10 @@ export const useTokenForLogin = () => {
   const router = useRouter()
   const token = useAppSelector(state => state.token.value)
 
-  useEffect(() => {
+  useEffect(async () => {
     if (token) {
-      reloadUser(token, dispatch, router)
+      await reloadUser(token, dispatch, router)
+      .then(() => router.push('/dashboard'))
     } else {
       console.log('token does not exist')
     }
@@ -61,12 +61,14 @@ export const useTokenForLogin = () => {
 export const useNoTokenSignOut = () => {
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const token = useAppSelector(state => state.token.value)
+  const { user, token: { value: token } } = useAppSelector(state => state)
 
   useEffect(() => {
     if (!token) {
       dispatch(clearUser())
       router.push('/')
+    } else if (Object.values(user).some(val => val === null)) {
+      reloadUser(token, dispatch, router)
     }
   }, [token])
 }

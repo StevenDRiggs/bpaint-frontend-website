@@ -63,7 +63,7 @@ const Dashboard: NextPage = () => {
               favorite_packages?.length > 0
               // @ts-ignore
               ? favorite_pkgs.map(pkg => (
-                <Link key={pkg.id} href={`/pkg/${pkg.slug}`}>
+                <Link key={pkg.id} href={`/packages/${pkg.slug}`}>
                   <a>
                     {pkg.name}
                   </a>
@@ -126,7 +126,7 @@ const Dashboard: NextPage = () => {
                     Packages:
                   </p>
                   {created_packages.map(pkg => (
-                    <Link key={pkg.id} href={`/pkg/${pkg.slug}`}>
+                    <Link key={pkg.id} href={`/packages/${pkg.slug}`}>
                       <a>
                         {pkg.name}
                       </a>
