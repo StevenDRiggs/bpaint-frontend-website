@@ -109,7 +109,7 @@ const LoadingIcon = ({ isLoading }) => {
 
             <g id='butterflySparkles'>
               {[...Array(85).keys()].map(key => (
-                <ellipse key={key} cx={Math.floor(Math.random() * 750)} cy={Math.floor(Math.random() * 750)} rx={Math.random() * 5 + 5} ry={Math.random() * 5 + 5} fill={`#${Math.floor(Math.random() * 4294967295).toString(16)}`} mask='url(#butterflySparklesMask)'className='butterflySparkle' />
+                <ellipse key={key} cx={Math.floor(Math.random() * 750)} cy={Math.floor(Math.random() * 750)} rx={Math.random() * 5 + 5} ry={Math.random() * 5 + 5} fill={`#${Math.floor(Math.random() * 4294967295).toString(16)}`} mask='url(#butterflySparklesMask)' className='butterflySparkle' />
               ))}
             </g>
 
@@ -118,7 +118,7 @@ const LoadingIcon = ({ isLoading }) => {
       </main>
     )
   } else {
-    return null
+      return <div className='butterflySparkle' disabled />
   }
 }
 

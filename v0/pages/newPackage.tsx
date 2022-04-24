@@ -51,8 +51,8 @@ const NewPackageForm = () => {
             Create New Package
           </legend>
           <div className={styles.formField}>
-            <label htmlFor='name'>
-              Name:&nbsp;
+            <label htmlFor='name' className={styles.formLabel}>
+              Name:
             </label>
             <input type='text' id='name' value={name} placeholder='Package Name' onChange={handleChange} />
           </div>

@@ -4,11 +4,24 @@
   justify-content: space-between;
   align-items: center;
   height: 15%;
+  gap: 2rem;
 }
 
 .formField {
   display: flex;
   justify-content: space-between;
+}
+
+.formFieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    justify-content: space-between;
+    padding: 3ch;
+}
+
+.formLabel {
+    margin-right: 3ch;
 }
 
 .btn {

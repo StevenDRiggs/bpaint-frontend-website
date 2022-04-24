@@ -48,13 +48,17 @@ export const useTokenForLogin = () => {
   const token = useAppSelector(state => state.token.value)
 
   // @ts-ignore
-  useEffect(async () => {
-    if (token) {
-      await reloadUser(token, dispatch, router)
-      .then(() => router.push('/dashboard'))
-    } else {
-      console.log('token does not exist')
-    }
+  useEffect(() => {
+      const fetchToken = async () => {
+          if (token) {
+              await reloadUser(token, dispatch, router)
+              .then(() => router.push('/dashboard'))
+          } else {
+              console.log('token does not exist')
+          }
+      }
+
+      fetchToken()
   }, [token])
 }
 
