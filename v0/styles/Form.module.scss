@@ -1,15 +1,58 @@
+.btn {
+  width: fit-content;
+}
+
+.cancelUploadIcon {
+    position: absolute;
+    right: -5.5%;
+    top: -8%;
+    color: red;
+    background-color: white;
+    border-radius: 50%;
+
+    &:hover, &:active {
+        color: black;
+        background-color: red;
+    }
+}
+
+.errorMessage {
+    color: red;
+}
+
+.errorsList {
+    list-style: none;
+    width: 85%;
+}
+
+.fileInput {
+    width: 75%;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 15%;
   gap: 2rem;
+  margin-top: 10vh;
+  min-width: 50%;
+}
+
+.formDivider {
+    width: 40%;
+    border-bottom: solid black 1px;
 }
 
 .formField {
   display: flex;
   justify-content: space-between;
+}
+
+.formFieldAsContainer {
+    position: relative;
+    gap: 3%;
+    width: 100%;
 }
 
 .formFieldset {
@@ -18,12 +61,26 @@
     gap: 1.25rem;
     justify-content: space-between;
     padding: 3ch;
+    width: 100%;
 }
 
 .formLabel {
     margin-right: 3ch;
 }
 
-.btn {
-  width: fit-content;
+.inputGroup {
+    display: flex;
+    gap: 0.3em;
+}
+
+.radioButtonsContainer {
+    display: flex;
+    gap: 1em;
+}
+
+.vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
 }
