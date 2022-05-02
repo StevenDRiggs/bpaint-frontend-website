@@ -3,13 +3,86 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import React, { SyntheticEvent, useEffect, useRef, useState } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 import ReactHTMLDatalist from "react-html-datalist"
 
+import LoadingIcon from '../components/loadingIcon'
 import { BACKEND_URL } from '../.env'
 import { useNoTokenSignOut } from '../react/hooks'
 import { useAppSelector } from '../redux/hooks'
 
 import styles from '../styles/Form.module.scss'
+
+
+const colorBodyDatalistOptions = [
+    {
+        text: 'Heavy',
+        value: 'heavy',
+    },
+    {
+        text: 'Medium',
+        value: 'medium',
+    },
+    {
+        text: 'Light',
+        value: 'light',
+    },
+]
+
+const colorMediumDatalistOptions = [
+    {
+        text: 'Acrylic Paint',
+        value: 'acrylic_paint',
+    },
+    {
+        text: 'Oil Paint',
+        value: 'oil_paint',
+    },
+    {
+        text: 'Gouache',
+        value: 'gouache',
+    },
+    {
+        text: 'Watercolor Paint',
+        value: 'watercolor_paint',
+    },
+    {
+        text: 'Latex Paint',
+        value: 'latex_paint',
+    },
+    {
+        text: 'Colored Pencil',
+        value: 'colored_pencil',
+    },
+    {
+        text: 'Crayon',
+        value: 'crayon',
+    },
+    {
+        text: 'Pastel',
+        value: 'pastel',
+    },
+    {
+        text: 'Wax',
+        value: 'wax',
+    },
+    {
+        text: 'Dye',
+        value: 'dye',
+    },
+    {
+        text: 'Ink',
+        value: 'ink',
+    },
+    {
+        text: 'Powdercoat',
+        value: 'powdercoat',
+    },
+    {
+        text: 'Plastic/Resin',
+        value: 'plastic_or_resin',
+    },
+]
 
 
 const NewColorForm = () => {
@@ -18,6 +91,9 @@ const NewColorForm = () => {
 
     const verifyButton = useRef()
     const colorNameInput = useRef()
+    const dropArea = useRef()
+
+    const svgString = encodeURIComponent(renderToStaticMarkup(<LoadingIcon isLoading={true} />))
 
     const [ isFileUploaded, setIsFileUploaded ] = useState(false)
     const [ uploadedFile, setUploadedFile ] = useState()
@@ -42,6 +118,35 @@ const NewColorForm = () => {
         setUploadedFile(null)
         setIsFileUploaded(false)
         setFileUrl('')
+    }
+
+    const handleFileUploadDragEnter = (event: SyntheticEvent) => {
+        event.preventDefault()
+        event.stopPropagation()
+    }
+
+    const handleFileUploadDragLeave = (event: SyntheticEvent) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        dropArea.current.style.opacity = 1.0
+    }
+
+    const handleFileUploadDragOver = (event: SyntheticEvent) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        dropArea.current.style.opacity = 0.5
+    }
+
+    const handleFileUploadDrop = (event: SyntheticEvent) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        const { files } = event.dataTransfer
+        setIsFileUploaded(true)
+        setUploadedFile(files[0])
+        setFileUrl(URL.createObjectURL(files[0]))
     }
 
     const handleEnterKeyFromFileUrl = (event: SyntheticEvent) => {
@@ -116,7 +221,7 @@ const NewColorForm = () => {
                 }
                 <fieldset className={styles.formFieldset}>
                     <legend>
-                        Create New Color
+                        <strong>Create New Color</strong>
                     </legend>
                     <div className={`${styles.formField} ${styles.formFieldAsContainer} ${styles.vertical}`}>
                         {isFileUploaded
@@ -125,10 +230,15 @@ const NewColorForm = () => {
                                 <FontAwesomeIcon icon={faCircleXmark} size='lg' className={styles.cancelUploadIcon} onClick={cancelImageUpload} />
                             </>
                             : <>
-                                <label htmlFor='colorImageUpload'>
-                                    Upload an image of <wbr />your color:
+                                <label>
+                                    Drag an image<wbr /> of your color<wbr /> here:
                                 </label>
-                                <input type='file' accept='image/*' id='colorImageUpload' className={styles.fileInput} onChange={handleImageUpload} disabled={isValueInFileUrl} />
+                                {/* TODO: fix this so it shows */}
+                                <div className={styles.dragAndDrop} style={{backgroundImage: `url("data:image/svg+xml, ${svgString}")`}} onDragEnter={handleFileUploadDragEnter} onDragLeave={handleFileUploadDragLeave} onDragOver={handleFileUploadDragOver} onDrop={handleFileUploadDrop} ref={dropArea} />
+                                <p>
+                                    <strong>- OR -</strong>
+                                </p>
+                                <input type='file' accept='image/*' className={styles.fileInput} onChange={handleImageUpload} disabled={isValueInFileUrl} />
                                 <p>
                                     <strong>- OR -</strong>
                                 </p>
@@ -167,7 +277,7 @@ const NewColorForm = () => {
                         <label htmlFor='colorName'>
                             Color Name:
                         </label>
-                        <input type='text' id='colorName' name='ColorName' value={colorName} onChange={handleTextFieldChange} ref={colorNameInput} />
+                        <input type='text' id='colorName' name='ColorName' className={styles.formInput} value={colorName} onChange={handleTextFieldChange} ref={colorNameInput} />
                     </div>
                     <hr className={styles.formDivider} />
                     <label>
@@ -177,55 +287,55 @@ const NewColorForm = () => {
                         <label htmlFor='colorBody'>
                             Body:
                         </label>
-                        <input type='text' id='colorBody' name='ColorBody' value={colorBody} onChange={handleTextFieldChange} />
+                        <ReactHTMLDatalist name='ColorBody' options={colorBodyDatalistOptions} classNames={styles.formInput} onChange={handleTextFieldChange} />
                     </div>
                     <div className={`${styles.formField} ${styles.inputGroup}`}>
                         <label htmlFor='colorBrandname'>
                             Brandname:
                         </label>
-                        <input type='text' id='colorBrandname' name='ColorBrandname' value={colorBrandname} onChange={handleTextFieldChange} />
+                        <input type='text' id='colorBrandname' name='ColorBrandname' className={styles.formInput} value={colorBrandname} onChange={handleTextFieldChange} />
                     </div>
                     <div className={`${styles.formField} ${styles.inputGroup}`}>
                         <label htmlFor='colorGlossiness'>
                             Glossiness:
                         </label>
-                        <input type='text' id='colorGlossiness' name='ColorGlossiness' value={colorGlossiness} onChange={handleTextFieldChange} />
+                        <input type='number' id='colorGlossiness' name='ColorGlossiness' className={styles.formInput} value={colorGlossiness} min='0' max='100' onChange={handleTextFieldChange} />
                     </div>
                     <div className={`${styles.formField} ${styles.inputGroup}`}>
                         <label htmlFor='colorLightfastness'>
                             Lightfastness:
                         </label>
-                        <input type='text' id='colorLightfastness' name='ColorLightfastness' value={colorLightfastness} onChange={handleTextFieldChange} />
+                        <input type='number' id='colorLightfastness' name='ColorLightfastness' className={styles.formInput} value={colorLightfastness} min='0' max='100' onChange={handleTextFieldChange} />
                     </div>
                     <div className={`${styles.formField} ${styles.inputGroup}`}>
                         <label htmlFor='colorMedium'>
                             Medium:
                         </label>
-                        <input type='text' id='colorMedium' name='ColorMedium' value={colorMedium} onChange={handleTextFieldChange} />
+                        <ReactHTMLDatalist name='ColorMedium' options={colorMediumDatalistOptions} classNames={styles.formInput} onChange={handleTextFieldChange} />
                     </div>
                     <div className={`${styles.formField} ${styles.inputGroup}`}>
                         <label htmlFor='colorOpaqueness'>
                             Opaqueness:
                         </label>
-                        <input type='text' id='colorOpaqueness' name='ColorOpaqueness' value={colorOpaqueness} onChange={handleTextFieldChange} />
+                        <input type='number' id='colorOpaqueness' name='ColorOpaqueness' className={styles.formInput} value={colorOpaqueness} min='0' max='100'onChange={handleTextFieldChange} />
                     </div>
                     <div className={`${styles.formField} ${styles.inputGroup}`}>
                         <label htmlFor='colorSeries'>
                             Series:
                         </label>
-                        <input type='text' id='colorSeries' name='ColorSeries' value={colorSeries} onChange={handleTextFieldChange} />
+                        <input type='text' id='colorSeries' name='ColorSeries' className={styles.formInput} value={colorSeries} onChange={handleTextFieldChange} />
                     </div>
                     <div className={`${styles.formField} ${styles.inputGroup}`}>
                         <label htmlFor='colorThickness'>
                             Thickness:
                         </label>
-                        <input type='text' id='colorThickness' name='ColorThickness' value={colorThickness} onChange={handleTextFieldChange} />
+                        <input type='number' id='colorThickness' name='ColorThickness' className={styles.formInput} value={colorThickness} min='0' max='100' onChange={handleTextFieldChange} />
                     </div>
                     <div className={`${styles.formField} ${styles.inputGroup}`}>
                         <label htmlFor='colorTinting'>
                             Tinting:
                         </label>
-                        <input type='text' id='colorTinting' name='ColorTinting' value={colorTinting} onChange={handleTextFieldChange} />
+                        <input type='number' id='colorTinting' name='ColorTinting' className={styles.formInput} value={colorTinting} min='0' max='100' onChange={handleTextFieldChange} />
                     </div>
                 </fieldset>
                 <button type='submit' className={styles.btn}>

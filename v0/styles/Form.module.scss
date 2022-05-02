@@ -16,6 +16,12 @@
     }
 }
 
+.dragAndDrop {
+    border: 0.6rem dashed gray;
+    width: 75%;
+    height: 10rem;
+}
+
 .errorMessage {
     color: red;
 }
@@ -37,6 +43,7 @@
   gap: 2rem;
   margin-top: 10vh;
   min-width: 50%;
+  padding-top: 35%;
 }
 
 .formDivider {
@@ -62,6 +69,10 @@
     justify-content: space-between;
     padding: 3ch;
     width: 100%;
+}
+
+.formInput {
+    width: 58%;
 }
 
 .formLabel {
