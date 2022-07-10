@@ -1,4 +1,9 @@
-export interface AnalogColor {
+export interface LoadingIconProps {
+  isLoading: boolean;
+}
+
+
+export interface AnalogColorInterface {
   id: number;
   creator_id: number;
   body: string;
@@ -29,10 +34,10 @@ export interface PackageInterface {
   updated_at?: Date;
   name?: string;
   slug?: string;
-  analog_recipes?: Recipe[];
+  analog_recipes?: RecipeInterface[];
 }
 
-export interface Recipe {
+export interface RecipeInterface {
   id: number;
   creator_id: number;
   created_at: Date;
@@ -62,13 +67,13 @@ export interface UserState {
   image_url: string;
   creations: {
     packages: PackageInterface[];
-    recipes: Recipe[];
-    analog_colors: AnalogColor[];
+    recipes: RecipeInterface[];
+    analog_colors: AnalogColorInterface[];
   };
   favorites: {
     packages: PackageInterface[];
-    recipes: Recipe[];
-    analog_colors: AnalogColor[];
+    recipes: RecipeInterface[];
+    analog_colors: AnalogColorInterface[];
   };
 }
 

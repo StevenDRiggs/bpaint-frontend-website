@@ -7,6 +7,9 @@ import { useEffect } from 'react'
 import { reloadUser, useNoTokenSignOut } from '../react/hooks'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
+import { AnalogColorInterface, PackageInterface, RecipeInterface } from '../types'
+
+// @ts-ignore
 import styles from '../styles/Dashboard.module.scss'
 
 
@@ -125,7 +128,7 @@ const Dashboard: NextPage = () => {
                   <p>
                     Packages:
                   </p>
-                  {created_packages.map(pkg => (
+                  {created_packages.map((pkg: PackageInterface) => (
                     <Link key={pkg.id} href={`/packages/${pkg.slug}`}>
                       <a>
                         {pkg.name}
@@ -140,7 +143,7 @@ const Dashboard: NextPage = () => {
                   <p>
                     Recipes:
                   </p>
-                  {created_recipes.map(recipe => (
+                  {created_recipes.map((recipe: RecipeInterface) => (
                     <Link key={recipe.id} href={`/recipe/${recipe.id}`}>
                       <a>
                         [{recipe.display}]
@@ -155,7 +158,7 @@ const Dashboard: NextPage = () => {
                   <p>
                     Analog Colors:
                   </p>
-                  {created_analog_colors.map(color => (
+                  {created_analog_colors.map((color: AnalogColorInterface) => (
                     <div key={color.id}>
                       <Link href={`/color/${color.id}`}>
                         <a>

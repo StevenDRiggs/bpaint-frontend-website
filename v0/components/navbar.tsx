@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark, faCalendarPlus, faFolderPlus, faHouse, faSquarePlus } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'next/router'

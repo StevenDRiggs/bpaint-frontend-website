@@ -1,8 +1,10 @@
 import { gsap } from 'gsap'
 import React, { useEffect } from 'react'
 
+import { LoadingIconProps } from '../types'
 
-const LoadingIcon = ({ isLoading }) => {
+
+const LoadingIcon = ({ isLoading }: LoadingIconProps) => {
   useEffect(() => {
     let tl = gsap.timeline({
       duration: 0.6,
@@ -108,7 +110,8 @@ const LoadingIcon = ({ isLoading }) => {
             </g>
 
             <g id='butterflySparkles'>
-              {[...Array(85).keys()].map(key => (
+              {// @ts-ignore
+                [...Array(85).keys()].map(key => (
                 <ellipse key={key} cx={Math.floor(Math.random() * 750)} cy={Math.floor(Math.random() * 750)} rx={Math.random() * 5 + 5} ry={Math.random() * 5 + 5} fill={`#${Math.floor(Math.random() * 4294967295).toString(16)}`} mask='url(#butterflySparklesMask)' className='butterflySparkle' />
               ))}
             </g>
@@ -118,7 +121,7 @@ const LoadingIcon = ({ isLoading }) => {
       </main>
     )
   } else {
-      return <div className='butterflySparkle' disabled />
+      return null
   }
 }
 

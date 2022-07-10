@@ -11,6 +11,7 @@ import { BACKEND_URL } from '../.env'
 import { useNoTokenSignOut } from '../react/hooks'
 import { useAppSelector } from '../redux/hooks'
 
+// @ts-ignore
 import styles from '../styles/Form.module.scss'
 
 
@@ -96,10 +97,10 @@ const NewColorForm = () => {
     const svgString = encodeURIComponent(renderToStaticMarkup(<LoadingIcon isLoading={true} />))
 
     const [ isFileUploaded, setIsFileUploaded ] = useState(false)
-    const [ uploadedFile, setUploadedFile ] = useState()
+    const [ uploadedFile, setUploadedFile ] = useState<File|null>(null)
     const [ fileUrl, setFileUrl ] = useState('')
     const [ isValueInFileUrl, setIsValueInFileUrl ] = useState(false)
-    const [ errors, setErrors ] = useState([])
+    const [ errors, setErrors ] = useState<string[]>([])
     const [ isAnalog, setIsAnalog ] = useState(true)
     const [ colorName, setColorName ] = useState('')
     const [ colorBody, setColorBody ] = useState('')
@@ -114,6 +115,7 @@ const NewColorForm = () => {
 
 
     const cancelImageUpload = () => {
+        // @ts-ignore
         URL.revokeObjectURL(uploadedFile)
         setUploadedFile(null)
         setIsFileUploaded(false)
@@ -129,6 +131,7 @@ const NewColorForm = () => {
         event.preventDefault()
         event.stopPropagation()
 
+        // @ts-ignore
         dropArea.current.style.opacity = 1.0
     }
 
@@ -136,6 +139,7 @@ const NewColorForm = () => {
         event.preventDefault()
         event.stopPropagation()
 
+        // @ts-ignore
         dropArea.current.style.opacity = 0.5
     }
 
@@ -143,6 +147,7 @@ const NewColorForm = () => {
         event.preventDefault()
         event.stopPropagation()
 
+        // @ts-ignore
         const { files } = event.dataTransfer
         setIsFileUploaded(true)
         setUploadedFile(files[0])
@@ -150,8 +155,11 @@ const NewColorForm = () => {
     }
 
     const handleEnterKeyFromFileUrl = (event: SyntheticEvent) => {
+        // @ts-ignore
         if (event.key === 'Enter') {
+            // @ts-ignore
             verifyButton.current.click()
+            // @ts-ignore
             colorNameInput.current.focus()
         }
     }
@@ -227,6 +235,7 @@ const NewColorForm = () => {
                         {isFileUploaded
                             ? <>
                                 <Image src={fileUrl} width={150} height={100} />
+                                {/* @ts-ignore */}
                                 <FontAwesomeIcon icon={faCircleXmark} size='lg' className={styles.cancelUploadIcon} onClick={cancelImageUpload} />
                             </>
                             : <>
@@ -234,6 +243,7 @@ const NewColorForm = () => {
                                     Drag an image<wbr /> of your color<wbr /> here:
                                 </label>
                                 {/* TODO: fix this so it shows */}
+                                {/* @ts-ignore */}
                                 <div className={styles.dragAndDrop} style={{backgroundImage: `url("data:image/svg+xml, ${svgString}")`}} onDragEnter={handleFileUploadDragEnter} onDragLeave={handleFileUploadDragLeave} onDragOver={handleFileUploadDragOver} onDrop={handleFileUploadDrop} ref={dropArea} />
                                 <p>
                                     <strong>- OR -</strong>
@@ -246,6 +256,7 @@ const NewColorForm = () => {
                                     Enter a URL for your image:
                                 </label>
                                 <input type='text' id='colorImageUrl' name='FileUrl' value={fileUrl} onChange={handleTextFieldChange} onKeyDown={handleEnterKeyFromFileUrl} />
+                                {/* @ts-ignore */}
                                 <button type='button' onClick={verifyImageFromUrl} ref={verifyButton} hidden={!isValueInFileUrl}>
                                     Verify
                                 </button>
@@ -277,6 +288,7 @@ const NewColorForm = () => {
                         <label htmlFor='colorName'>
                             Color Name:
                         </label>
+                        {/* @ts-ignore */}
                         <input type='text' id='colorName' name='ColorName' className={styles.formInput} value={colorName} onChange={handleTextFieldChange} ref={colorNameInput} />
                     </div>
                     <hr className={styles.formDivider} />

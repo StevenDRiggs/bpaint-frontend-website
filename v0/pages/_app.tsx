@@ -17,11 +17,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 
   useEffect(() => {
-    const handleStart = url => {
+    const handleStart = (url: string) => {
       url !== router.pathname ? setIsLoading(true) : setIsLoading(true)
     }
 
-    const handleComplete = url => setIsLoading(false)
+    const handleComplete = (url: string) => setIsLoading(false)
 
     router.events.on('routeChangeStart', handleStart)
     router.events.on('routeChangeComplete', handleComplete)
@@ -30,10 +30,12 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Provider store={store}>
+      {/* @ts-ignore */}
       <PersistGate loading={null} persistor={persistor}>
 
         <Navbar />
         <LoadingIcon isLoading={isLoading} />
+        {/* @ts-ignore */}
         <Component {...pageProps} />
 
         <footer>

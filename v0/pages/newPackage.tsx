@@ -5,6 +5,7 @@ import { BACKEND_URL } from '../.env'
 import { useNoTokenSignOut } from '../react/hooks'
 import { useAppSelector } from '../redux/hooks'
 
+// @ts-ignore
 import styles from '../styles/Form.module.scss'
 
 

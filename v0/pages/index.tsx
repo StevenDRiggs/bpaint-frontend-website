@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 
 import { useTokenForLogin } from '../react/hooks'
+
+// @ts-ignore
 import styles from '../styles/Home.module.scss'
 
 

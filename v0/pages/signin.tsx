@@ -6,6 +6,7 @@ import { useTokenForLogin } from '../react/hooks'
 import { login } from '../redux/features/user/userSlice'
 import { useAppDispatch, useAppSelector } from '../redux/hooks'
 
+// @ts-ignore
 import styles from '../styles/SignUpSignIn.module.scss'
 
 
