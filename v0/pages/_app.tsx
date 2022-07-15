@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         {/* @ts-ignore */}
         <Component {...pageProps} />
 
-        <footer>
+        <footer id='pageFooter'>
           <a
             href="https://stevendriggs.com"
             target="_blank"

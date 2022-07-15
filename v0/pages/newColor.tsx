@@ -89,6 +89,7 @@ const colorMediumDatalistOptions = [
 const NewColorForm = () => {
     // useNoTokenSignOut()
 
+    const router = useRouter()
 
     const verifyButton = useRef()
     const colorNameInput = useRef()
@@ -173,8 +174,36 @@ const NewColorForm = () => {
         setFileUrl(URL.createObjectURL(files[0]))
     }
 
-    const handleSubmit = (event: SyntheticEvent) => {
+    const handleSubmit = async (event: SyntheticEvent) => {
         event.preventDefault()
+
+        const colorRoute = isAnalog ? 'analog' : 'digital'
+
+        await fetch(`${BACKEND_URL}/${colorRoute}_colors`, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Authentication': 'TEMPORARY FILLER',
+            'Content-Type': 'multipart/form-data',
+          },
+          body: JSON.stringify({
+            analog_color: {
+              image: uploadedFile,
+              name: colorName,
+              body: colorBody,
+              brandname: colorBrandname,
+              glossiness: colorGlossiness,
+              lightfastness: colorLightfastness,
+              medium: colorMedium,
+              opaqueness: colorOpaqueness,
+              series: colorSeries,
+              thickness: colorThickness,
+              tinting: colorTinting,
+              creator_id: 1, // TEMP
+            },
+          }),
+        })
+        .then(() => router.replace('/'))
     }
 
     const handleTextFieldChange = (event: SyntheticEvent) => {
@@ -248,7 +277,7 @@ const NewColorForm = () => {
                                 <p>
                                     <strong>- OR -</strong>
                                 </p>
-                                <input type='file' accept='image/*' className={styles.fileInput} onChange={handleImageUpload} disabled={isValueInFileUrl} />
+                                <input type='file' accept='image/*' className={styles.fileInput} onChange={handleImageUpload} hidden={isValueInFileUrl} />
                                 <p>
                                     <strong>- OR -</strong>
                                 </p>
